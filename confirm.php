@@ -1,71 +1,116 @@
+<?php
+
+// POST以外からアクセスされた場合はお問い合わせフォームへ戻す
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    header('Location: contact.php');
+    exit;
+}
+
+// POSTデータを受け取る
+$name = $_POST['name'] ?? '';
+$companyName = $_POST['companyName'] ?? '';
+$email = $_POST['email'] ?? '';
+$age = $_POST['age'] ?? '';
+$message = $_POST['message'] ?? '';
+
+// 未入力チェック
+if (
+    $name === '' ||
+    $companyName === '' ||
+    $email === '' ||
+    $age === '' ||
+    $message === ''
+) {
+    header('Location: contact.php');
+    exit;
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
     <meta charset="UTF-8">
-    <title>お問い合わせフォーム</title>
+    <title>お問い合わせフォーム・確認画面</title>
+
+    <style>
+        table {
+            border: 3px solid black;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            border: 1px solid black;
+            padding: 5px;
+        }
+    </style>
 </head>
 
 <body>
 
-<h1>お問い合わせフォーム</h1>
+<header>
+    <h2>お問い合わせフォーム・確認画面</h2>
+</header>
 
-<ul>
-    <li><a href="#">トップページ</a></li>
-    <li><a href="#">人気投稿</a></li>
-    <li><a href="#">エンジニアおすすめ商品</a></li>
-    <li><a href="#">エンジニアおすすめ記事</a></li>
-    <li><a href="#">投稿ページ</a></li>
-</ul>
+<aside>
+    <ul>
+        <li><a href="#">トップページ</a></li>
+        <li><a href="#">人気投稿</a></li>
+        <li><a href="#">エンジニアおすすめ商品</a></li>
+        <li><a href="#">エンジニアおすすめ記事</a></li>
+        <li><a href="#">投稿ページ</a></li>
+    </ul>
+</aside>
 
-<form method="POST" action="">
+<table>
+    <tr>
+        <th>お名前</th>
+        <td><?php echo htmlspecialchars($name, ENT_QUOTES, 'UTF-8'); ?></td>
+    </tr>
 
-    <table border="2">
-        <tr>
-            <th>お名前</th>
-            <td><input type="text" name="name"></td>
-        </tr>
+    <tr>
+        <th>会社名</th>
+        <td><?php echo htmlspecialchars($companyName, ENT_QUOTES, 'UTF-8'); ?></td>
+    </tr>
 
-        <tr>
-            <th>会社名</th>
-            <td><input type="text" name="company"></td>
-        </tr>
+    <tr>
+        <th>メールアドレス</th>
+        <td><?php echo htmlspecialchars($email, ENT_QUOTES, 'UTF-8'); ?></td>
+    </tr>
 
-        <tr>
-            <th>メールアドレス</th>
-            <td><input type="text" name="email"></td>
-        </tr>
+    <tr>
+        <th>年齢</th>
+        <td><?php echo htmlspecialchars($age, ENT_QUOTES, 'UTF-8'); ?></td>
+    </tr>
 
-        <tr>
-            <th>年齢</th>
-            <td><input type="text" name="age"></td>
-        </tr>
+    <tr>
+        <th>お問い合わせ内容</th>
+        <td><?php echo nl2br(htmlspecialchars($message, ENT_QUOTES, 'UTF-8')); ?></td>
+    </tr>
+</table>
 
-        <tr>
-            <th>お問い合わせ内容</th>
-            <td>
-                <textarea name="message" rows="7" cols="40"
-                    placeholder="お問い合わせ内容"></textarea>
-            </td>
-        </tr>
-    </table>
+<br>
+
+<!-- 送信ボタン -->
+<form method="POST" action="send.php">
+
+    <input type="hidden" name="name" value="<?php echo htmlspecialchars($name, ENT_QUOTES, 'UTF-8'); ?>">
+
+    <input type="hidden" name="companyName" value="<?php echo htmlspecialchars($companyName, ENT_QUOTES, 'UTF-8'); ?>">
+
+    <input type="hidden" name="email" value="<?php echo htmlspecialchars($email, ENT_QUOTES, 'UTF-8'); ?>">
+
+    <input type="hidden" name="age" value="<?php echo htmlspecialchars($age, ENT_QUOTES, 'UTF-8'); ?>">
+
+    <input type="hidden" name="message" value="<?php echo htmlspecialchars($message, ENT_QUOTES, 'UTF-8'); ?>">
 
     <input type="submit" value="送信">
 
 </form>
 
-<p>横のボタンを押すとfooterの背景色が変わります。</p>
-
-<button type="button" onclick="changeColor()">押してみてね！</button>
-
-<footer id="footer">
-    <p>footer</p>
-</footer>
-
-<script>
-function changeColor() {
-    document.getElementById("footer").style.backgroundColor = "lightblue";
-}
-</script>
+<!-- 戻るボタン -->
+<input type="button" value="戻る" onclick="history.back()">
 
 </body>
 </html>

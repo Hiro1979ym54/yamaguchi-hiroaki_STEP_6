@@ -1,47 +1,47 @@
 <?php
 
-// POSTで送信されていない場合はcontact.phpへ戻る
+// POST以外からアクセスされた場合はお問い合わせフォームへ戻す
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     header('Location: contact.php');
     exit;
 }
 
-// データを受け取る
+// POSTデータを受け取る
 $name = $_POST['name'] ?? '';
 $companyName = $_POST['companyName'] ?? '';
 $email = $_POST['email'] ?? '';
 $age = $_POST['age'] ?? '';
 $message = $_POST['message'] ?? '';
 
-/*
- * メール送信
- */
+// 未入力チェック
+if (
+    $name === '' ||
+    $companyName === '' ||
+    $email === '' ||
+    $age === '' ||
+    $message === ''
+) {
+    header('Location: contact.php');
+    exit;
+}
 
-// 送信先メールアドレス
-$to = "test@gamail.com";
+// メール送信
+$to = 'example@example.com';
+$subject = 'お問い合わせフォームからのお問い合わせ';
 
-// 件名
-$subject = "お問い合わせフォーム";
-
-// 本文
 $body = "お名前：{$name}\n";
 $body .= "会社名：{$companyName}\n";
 $body .= "メールアドレス：{$email}\n";
 $body .= "年齢：{$age}\n";
-$body .= "お問い合わせ内容：{$message}\n";
+$body .= "お問い合わせ内容：\n{$message}\n";
 
-// メールヘッダー
-$headers = "From: {$email}";
-
-// メール送信
-$result = mb_send_mail($to, $subject, $body, $headers);
+mb_send_mail($to, $subject, $body);
 
 ?>
 
 <!DOCTYPE html>
 <html lang="ja">
 
-<!--完了画面-->
 <head>
     <meta charset="UTF-8">
     <title>お問い合わせフォーム・送信完了画面</title>
@@ -49,22 +49,15 @@ $result = mb_send_mail($to, $subject, $body, $headers);
 
 <body>
 
-    <h1>お問い合わせフォーム・送信完了画面</h1>
+<h1>お問い合わせフォーム・送信完了画面</h1>
 
-    <?php
+<?php
+echo "お問い合わせが送信されました。ありがとうございます!";
+?>
 
-    if ($result) {
-        echo "お問い合わせが送信されました。ありがとうございます！";
-    } else {
-        echo "メールの送信に失敗しました。";
-    }
+<br><br>
 
-    ?>
-
-    <br><br>
-
-    <a href="contact.php">お問い合わせフォームに戻る</a>
+<a href="contact.php">お問い合わせフォームに戻る</a>
 
 </body>
-
 </html>
