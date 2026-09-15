@@ -25,6 +25,9 @@
             height: 10em;
         }
     </style>
+
+    <!-- JavaScriptを読み込む -->
+    <script src="style.js"></script>
 </head>
 
 <body>
@@ -43,41 +46,41 @@
     </ul>
 </aside>
 
-<form method="POST" action="confirm.php">
+<form method="POST" action="confirm.php" id="contactForm">
 
     <table>
         <tr>
             <th>お名前</th>
             <td>
-                <input type="text" name="name" required>
+                <input type="text" name="name" id="name" required>
             </td>
         </tr>
 
         <tr>
             <th>会社名</th>
             <td>
-                <input type="text" name="companyName" required>
+                <input type="text" name="companyName" id="companyName" required>
             </td>
         </tr>
 
         <tr>
             <th>メールアドレス</th>
             <td>
-                <input type="text" name="email" required>
+                <input type="text" name="email" id="email" required>
             </td>
         </tr>
 
         <tr>
             <th>年齢</th>
             <td>
-                <input type="text" name="age" required>
+                <input type="text" name="age" id="age" required>
             </td>
         </tr>
 
         <tr>
             <th>お問い合わせ内容</th>
             <td>
-                <textarea name="message" required></textarea>
+                <textarea name="message" id="message" required></textarea>
             </td>
         </tr>
     </table>
@@ -87,7 +90,7 @@
 </form>
 
 <footer>
-    <button type="button">押してみてね!</button>
+    <button type="button" id="footerButton">押してみてね!</button>
 </footer>
 
 </body>

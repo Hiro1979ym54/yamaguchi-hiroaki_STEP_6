@@ -1,19 +1,16 @@
 <?php
 
-// POST以外からアクセスされた場合はお問い合わせフォームへ戻す
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     header('Location: contact.php');
     exit;
 }
 
-// POSTデータを受け取る
 $name = $_POST['name'] ?? '';
 $companyName = $_POST['companyName'] ?? '';
 $email = $_POST['email'] ?? '';
 $age = $_POST['age'] ?? '';
 $message = $_POST['message'] ?? '';
 
-// 未入力チェック
 if (
     $name === '' ||
     $companyName === '' ||
@@ -25,7 +22,6 @@ if (
     exit;
 }
 
-// メール送信
 $to = 'example@example.com';
 $subject = 'お問い合わせフォームからのお問い合わせ';
 
@@ -35,7 +31,8 @@ $body .= "メールアドレス：{$email}\n";
 $body .= "年齢：{$age}\n";
 $body .= "お問い合わせ内容：\n{$message}\n";
 
-mb_send_mail($to, $subject, $body);
+/* メール送信 */
+$result = mb_send_mail($to, $subject, $body);
 
 ?>
 
@@ -51,9 +48,19 @@ mb_send_mail($to, $subject, $body);
 
 <h1>お問い合わせフォーム・送信完了画面</h1>
 
-<?php
-echo "お問い合わせが送信されました。ありがとうございます!";
-?>
+<?php if ($result): ?>
+
+    <?php
+    echo "お問い合わせが送信されました。ありがとうございます!";
+    ?>
+
+<?php else: ?>
+
+    <?php
+    echo "メールの送信に失敗しました。";
+    ?>
+
+<?php endif; ?>
 
 <br><br>
 
