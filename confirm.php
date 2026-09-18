@@ -1,6 +1,6 @@
 <?php
 
-// POST以外からアクセスされた場合はお問い合わせフォームへ戻す
+// フォーム以外から直接アクセスされた場合
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     header('Location: contact.php');
     exit;
@@ -21,8 +21,7 @@ if (
     $age === '' ||
     $message === ''
 ) {
-    header('Location: contact.php');
-    exit;
+    $error = '未入力の項目があります。';
 }
 
 ?>
@@ -32,19 +31,11 @@ if (
 
 <head>
     <meta charset="UTF-8">
+
+    <!-- 課題の指定文字列に合わせる -->
     <title>お問い合わせフォーム・確認画面</title>
 
-    <style>
-        table {
-            border: 3px solid black;
-            border-collapse: collapse;
-        }
-
-        th, td {
-            border: 1px solid black;
-            padding: 5px;
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
@@ -63,54 +54,82 @@ if (
     </ul>
 </aside>
 
-<table>
-    <tr>
-        <th>お名前</th>
-        <td><?php echo htmlspecialchars($name, ENT_QUOTES, 'UTF-8'); ?></td>
-    </tr>
+<?php if (isset($error)): ?>
 
-    <tr>
-        <th>会社名</th>
-        <td><?php echo htmlspecialchars($companyName, ENT_QUOTES, 'UTF-8'); ?></td>
-    </tr>
+    <p><?php echo htmlspecialchars($error, ENT_QUOTES, 'UTF-8'); ?></p>
 
-    <tr>
-        <th>メールアドレス</th>
-        <td><?php echo htmlspecialchars($email, ENT_QUOTES, 'UTF-8'); ?></td>
-    </tr>
+    <input type="button" value="戻る" onclick="history.back()">
 
-    <tr>
-        <th>年齢</th>
-        <td><?php echo htmlspecialchars($age, ENT_QUOTES, 'UTF-8'); ?></td>
-    </tr>
+<?php else: ?>
 
-    <tr>
-        <th>お問い合わせ内容</th>
-        <td><?php echo nl2br(htmlspecialchars($message, ENT_QUOTES, 'UTF-8')); ?></td>
-    </tr>
-</table>
+    <table>
+        <tr>
+            <th>お名前</th>
+            <td>
+                <?php echo htmlspecialchars($name, ENT_QUOTES, 'UTF-8'); ?>
+            </td>
+        </tr>
 
-<br>
+        <tr>
+            <th>会社名</th>
+            <td>
+                <?php echo htmlspecialchars($companyName, ENT_QUOTES, 'UTF-8'); ?>
+            </td>
+        </tr>
 
-<!-- 送信ボタン -->
-<form method="POST" action="send.php">
+        <tr>
+            <th>メールアドレス</th>
+            <td>
+                <?php echo htmlspecialchars($email, ENT_QUOTES, 'UTF-8'); ?>
+            </td>
+        </tr>
 
-    <input type="hidden" name="name" value="<?php echo htmlspecialchars($name, ENT_QUOTES, 'UTF-8'); ?>">
+        <tr>
+            <th>年齢</th>
+            <td>
+                <?php echo htmlspecialchars($age, ENT_QUOTES, 'UTF-8'); ?>
+            </td>
+        </tr>
 
-    <input type="hidden" name="companyName" value="<?php echo htmlspecialchars($companyName, ENT_QUOTES, 'UTF-8'); ?>">
+        <tr>
+            <th>お問い合わせ内容</th>
+            <td>
+                <?php echo nl2br(htmlspecialchars($message, ENT_QUOTES, 'UTF-8')); ?>
+            </td>
+        </tr>
+    </table>
 
-    <input type="hidden" name="email" value="<?php echo htmlspecialchars($email, ENT_QUOTES, 'UTF-8'); ?>">
+    <br>
 
-    <input type="hidden" name="age" value="<?php echo htmlspecialchars($age, ENT_QUOTES, 'UTF-8'); ?>">
+    <form method="POST" action="send.php">
 
-    <input type="hidden" name="message" value="<?php echo htmlspecialchars($message, ENT_QUOTES, 'UTF-8'); ?>">
+        <input type="hidden"
+               name="name"
+               value="<?php echo htmlspecialchars($name, ENT_QUOTES, 'UTF-8'); ?>">
 
-    <input type="submit" value="送信">
+        <input type="hidden"
+               name="companyName"
+               value="<?php echo htmlspecialchars($companyName, ENT_QUOTES, 'UTF-8'); ?>">
 
-</form>
+        <input type="hidden"
+               name="email"
+               value="<?php echo htmlspecialchars($email, ENT_QUOTES, 'UTF-8'); ?>">
 
-<!-- 戻るボタン -->
-<input type="button" value="戻る" onclick="history.back()">
+        <input type="hidden"
+               name="age"
+               value="<?php echo htmlspecialchars($age, ENT_QUOTES, 'UTF-8'); ?>">
+
+        <input type="hidden"
+               name="message"
+               value="<?php echo htmlspecialchars($message, ENT_QUOTES, 'UTF-8'); ?>">
+
+        <input type="submit" value="送信">
+
+    </form>
+
+    <input type="button" value="戻る" onclick="history.back()">
+
+<?php endif; ?>
 
 </body>
 </html>

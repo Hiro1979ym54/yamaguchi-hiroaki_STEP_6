@@ -5,26 +5,8 @@
     <meta charset="UTF-8">
     <title>お問い合わせフォーム</title>
 
-    <style>
-        table {
-            border: 3px solid black;
-            border-collapse: collapse;
-        }
-
-        th, td {
-            border: 1px solid black;
-            padding: 5px;
-        }
-
-        input[type="text"] {
-            width: 40em;
-        }
-
-        textarea {
-            width: 40em;
-            height: 10em;
-        }
-    </style>
+    <!-- CSSを読み込む -->
+    <link rel="stylesheet" href="style.css">
 
     <!-- JavaScriptを読み込む -->
     <script src="style.js"></script>
@@ -52,35 +34,35 @@
         <tr>
             <th>お名前</th>
             <td>
-                <input type="text" name="name" id="name" required>
+                <input type="text" name="name" id="name">
             </td>
         </tr>
 
         <tr>
             <th>会社名</th>
             <td>
-                <input type="text" name="companyName" id="companyName" required>
+                <input type="text" name="companyName" id="companyName">
             </td>
         </tr>
 
         <tr>
             <th>メールアドレス</th>
             <td>
-                <input type="text" name="email" id="email" required>
+                <input type="text" name="email" id="email">
             </td>
         </tr>
 
         <tr>
             <th>年齢</th>
             <td>
-                <input type="text" name="age" id="age" required>
+                <input type="text" name="age" id="age">
             </td>
         </tr>
 
         <tr>
             <th>お問い合わせ内容</th>
             <td>
-                <textarea name="message" id="message" required></textarea>
+                <textarea name="message" id="message"></textarea>
             </td>
         </tr>
     </table>

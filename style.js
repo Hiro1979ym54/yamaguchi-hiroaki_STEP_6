@@ -47,7 +47,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     // ========================================
-    // 「押してみてね！」ボタン
+    // 「押してみてね!」ボタン
     // ========================================
 
     const footer = document.querySelector("footer");
@@ -66,7 +66,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
         footerButton.addEventListener("click", () => {
 
-            footer.style.backgroundColor = footerColors[currentIndex];
+            footer.style.backgroundColor =
+                footerColors[currentIndex];
 
             currentIndex =
                 (currentIndex + 1) % footerColors.length;
